@@ -6,6 +6,8 @@ using System.IO.Compression;
 using System.Net;
 using System.ComponentModel;
 using Squirrel;
+using System.Windows.Media;
+using System.Threading.Tasks;
 
 namespace aprion
 {
@@ -183,10 +185,26 @@ namespace aprion
 
         private async void Window_ContentRendered(object sender, EventArgs e)
         {
+            var updateInfo = await manager.CheckForUpdate();
+
             manager = await UpdateManager
                     .GitHubUpdateManager(@"https://github.com/LocalCiggyShop/aprion");
 
             LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
+
+            if (updateInfo.ReleasesToApply.Count > 0)
+            {
+                LauncherUpdateBtn.Content = "Update Available";
+                LauncherUpdateBtn.Foreground = Brushes.White;
+                LauncherUpdateBtn.IsEnabled = true;
+            }
+            else
+            {
+                LauncherUpdateBtn.Content = "Up to date!";
+                LauncherUpdateBtn.Foreground = Brushes.Black;
+                LauncherUpdateBtn.IsEnabled = false;
+            }
+
             CheckForWebsite();
             CheckForUpdates();
         }
@@ -217,26 +235,10 @@ namespace aprion
             OpenLink("https://website-hosted-a.herokuapp.com/");
         }
 
-        private async void LauncherUpdateCheckerBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var updateInfo = await manager.CheckForUpdate();
-
-            if(updateInfo.ReleasesToApply.Count > 0)
-            {
-                LauncherUpdateBtn.Content = "Update Available";
-                LauncherUpdateBtn.IsEnabled = true;
-            }
-            else
-            {
-                LauncherUpdateBtn.Content = "Up to date!";
-                LauncherUpdateBtn.IsEnabled = false;
-            }
-        }
-
         private async void LauncherUpdateBtn_Click(object sender, RoutedEventArgs e)
         {
             await manager.UpdateApp();
-            MessageBox.Show("You have updated the launcher to the current version!");
+            MessageBox.Show("You have updated the launcher to the current version!\n\nPlease restart the application to apply!");
         }
     }
 
