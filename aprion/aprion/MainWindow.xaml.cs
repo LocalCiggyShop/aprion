@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Net;
 using System.ComponentModel;
+using Squirrel;
 
 namespace aprion
 {
@@ -21,6 +22,8 @@ namespace aprion
     /// </summary>
     public partial class MainWindow : Window
     {
+        UpdateManager manager;
+
         private string rootPath;
         private string versionFile;
         private string gameZip;
@@ -178,8 +181,12 @@ namespace aprion
             }
         }
 
-        private void Window_ContentRendered(object sender, EventArgs e)
+        private async void Window_ContentRendered(object sender, EventArgs e)
         {
+            manager = await UpdateManager
+                    .GitHubUpdateManager(@"https://github.com/LocalCiggyShop/aprion");
+
+            LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
             CheckForWebsite();
             CheckForUpdates();
         }
@@ -208,6 +215,28 @@ namespace aprion
         private void WebsiteBtn_Click(object sender, RoutedEventArgs e)
         {
             OpenLink("https://website-hosted-a.herokuapp.com/");
+        }
+
+        private async void LauncherUpdateCheckerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var updateInfo = await manager.CheckForUpdate();
+
+            if(updateInfo.ReleasesToApply.Count > 0)
+            {
+                LauncherUpdateBtn.Content = "Update Available";
+                LauncherUpdateBtn.IsEnabled = true;
+            }
+            else
+            {
+                LauncherUpdateBtn.Content = "Up to date!";
+                LauncherUpdateBtn.IsEnabled = false;
+            }
+        }
+
+        private async void LauncherUpdateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            await manager.UpdateApp();
+            MessageBox.Show("You have updated the launcher to the current version!");
         }
     }
 

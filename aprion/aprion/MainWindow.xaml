@@ -11,6 +11,10 @@
     <Grid Background="Transparent" Height="521" VerticalAlignment="Center">
         <WebBrowser Name="News" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,42,0,0" Width="1036" Height="403" Source="https://miningpvpa.herokuapp.com/" />
         <TextBlock Name="VersionText" HorizontalAlignment="Right" FontSize="20" Foreground="White" Margin="0,10,1005,484" RenderTransformOrigin="0.8,0.839" />
+        <TextBlock Name="LauncherVersion" Text="Game Launcher v0.0.0" HorizontalAlignment="Right" FontSize="20" Foreground="White" Margin="0,10,22,484" RenderTransformOrigin="0.8,0.839" />
+
+        <Button Name="LauncherUpdateCheckerBtn" Content="Check for launcher updates" Click="LauncherUpdateCheckerBtn_Click" Padding="5" Background="#4285F4" Foreground="White" HorizontalAlignment="Left"  MinWidth="150" BorderBrush="Transparent"  Margin="695,11,0,484"  />
+        <Button Name="LauncherUpdateBtn" Content="Update" Click="LauncherUpdateBtn_Click" Padding="5" Background="#4285F4" Foreground="White" HorizontalAlignment="Left"  BorderBrush="Transparent"  Margin="642,11,0,484" />
 
         <Grid Margin="22,450,22,0" Height="61" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
