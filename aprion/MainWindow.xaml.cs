@@ -258,6 +258,11 @@ namespace aprion
             await manager.UpdateApp();
             MessageBox.Show("You have updated the launcher to the current version!\n\nPlease restart the application to apply!");
         }
+
+        private void SuggestionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenLink("https://discord.gg/uJxTn9gGZh");
+        }
     }
 
     struct Version
