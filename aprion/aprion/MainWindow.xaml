@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Background="#1f1f1f"
         ContentRendered="Window_ContentRendered"
-        Title="Aprion Launcher" Height="542" Width="1080" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Aprion Launcher" Height="542" Width="1080" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid Background="Transparent" Height="521" VerticalAlignment="Center">
         <WebBrowser Name="News" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,42,0,0" Width="1036" Height="403" Source="https://miningpvpa.herokuapp.com/" />
         <TextBlock Name="VersionText" HorizontalAlignment="Right" FontSize="20" Foreground="White" Margin="0,10,1005,484" RenderTransformOrigin="0.8,0.839" />
@@ -26,5 +26,6 @@
             <Button Grid.Column="1" Name="PlayBtn" Content="Checking For Updates" Click="PlayBtn_Click" Height="53" FontSize="24"  Background="#154c79" Foreground="White" HorizontalAlignment="Center" MinWidth="150"  />
             <Button Grid.Column="2" Name="WebsiteBtn" Content="Website" Click="WebsiteBtn_Click" Height="43" FontSize="20" Padding="5" Background="#4285F4" Foreground="White" HorizontalAlignment="Center" MinWidth="150" BorderBrush="Transparent"  />
         </Grid>
+        <Button Name="LauncherUpdateCheckerBtn" Content="Check For Updates" Click="LauncherUpdateCheckerBtn_Click" Padding="5" Background="#4285F4" Foreground="White" HorizontalAlignment="Left"  BorderBrush="Transparent"  Margin="183,10,0,485" />
     </Grid>
 </Window>

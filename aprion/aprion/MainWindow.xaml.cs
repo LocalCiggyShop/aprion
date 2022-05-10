@@ -60,7 +60,6 @@ namespace aprion
             }
         }
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -185,24 +184,16 @@ namespace aprion
 
         private async void Window_ContentRendered(object sender, EventArgs e)
         {
-            manager = await UpdateManager
+            try
+            {
+                manager = await UpdateManager
                     .GitHubUpdateManager(@"https://github.com/LocalCiggyShop/aprion");
 
-            var updateInfo = await manager.CheckForUpdate();
-
-            LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
-
-            if (updateInfo.ReleasesToApply.Count > 0)
-            {
-                LauncherUpdateBtn.Content = "Update Available";
-                LauncherUpdateBtn.Foreground = Brushes.White;
-                LauncherUpdateBtn.IsEnabled = true;
+                LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
             }
-            else
+            catch(Exception ex)
             {
-                LauncherUpdateBtn.Content = "Up to date!";
-                LauncherUpdateBtn.Foreground = Brushes.Black;
-                LauncherUpdateBtn.IsEnabled = false;
+                LauncherVersion.Text = "Error Occured.";
             }
 
             CheckForWebsite();
@@ -239,6 +230,24 @@ namespace aprion
         {
             await manager.UpdateApp();
             MessageBox.Show("You have updated the launcher to the current version!\n\nPlease restart the application to apply!");
+        }
+
+        private async void LauncherUpdateCheckerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var updateInfo = await manager.CheckForUpdate();
+
+            if (updateInfo.ReleasesToApply.Count > 0)
+            {
+                LauncherUpdateBtn.Content = "Up to date!";
+                LauncherUpdateBtn.Foreground = Brushes.Black;
+                LauncherUpdateBtn.IsEnabled = false;
+            }
+            else
+            {
+                LauncherUpdateBtn.Content = "Update Available";
+                LauncherUpdateBtn.Foreground = Brushes.White;
+                LauncherUpdateBtn.IsEnabled = true;
+            }
         }
     }
 
