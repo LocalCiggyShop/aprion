@@ -86,6 +86,33 @@ namespace aprion
             }
         }
 
+        private async void CheckForLauncherUpdates()
+        {
+            try
+            {
+                var updateInfo = await manager.CheckForUpdate();
+
+                if (updateInfo.ReleasesToApply.Count > 0)
+                {
+                    LauncherUpdateBtn.Content = "Update Available";
+                    LauncherUpdateBtn.Foreground = Brushes.White;
+                    LauncherUpdateBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF1D8600"));
+                    LauncherUpdateBtn.Visibility = Visibility.Visible;
+                    LauncherUpdateBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LauncherUpdateBtn.Visibility = Visibility.Hidden;
+                    LauncherUpdateBtn.IsEnabled = false;
+                }
+            } 
+            catch (Exception)
+            {
+                LauncherUpdateBtn.Content = "Error Occurred";
+                LauncherUpdateBtn.Foreground = Brushes.Black;
+                LauncherUpdateBtn.IsEnabled = false;
+            }
+        }
         private void OpenLink(string link)
         {
             string title = "Confirmation";
@@ -157,7 +184,7 @@ namespace aprion
                 //webClient.DownloadString(new Uri("https://drive.google.com/uc?export=download&id=1fR4Fz6rMSqSapch4kRVsEtMxQanTRHHL"));
                 webClient.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&id=1hS80VPH81kR60Bvu297MiiN3MGfW-a52"), gameZip, _onlineVersion);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Status = LauncherStatus.failed;
             }
@@ -191,11 +218,11 @@ namespace aprion
 
                 LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                LauncherVersion.Text = "Error Occured.";
+                LauncherVersion.Text = "Error Occurred, perhaps check discord.";
             }
-
+            CheckForLauncherUpdates();
             CheckForWebsite();
             CheckForUpdates();
         }
@@ -231,26 +258,7 @@ namespace aprion
             await manager.UpdateApp();
             MessageBox.Show("You have updated the launcher to the current version!\n\nPlease restart the application to apply!");
         }
-
-        private async void LauncherUpdateCheckerBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var updateInfo = await manager.CheckForUpdate();
-
-            if (updateInfo.ReleasesToApply.Count > 0)
-            {
-                LauncherUpdateBtn.Content = "Up to date!";
-                LauncherUpdateBtn.Foreground = Brushes.Black;
-                LauncherUpdateBtn.IsEnabled = false;
-            }
-            else
-            {
-                LauncherUpdateBtn.Content = "Update Available";
-                LauncherUpdateBtn.Foreground = Brushes.White;
-                LauncherUpdateBtn.IsEnabled = true;
-            }
-        }
     }
-
 
     struct Version
     {
