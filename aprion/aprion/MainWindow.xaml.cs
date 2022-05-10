@@ -185,10 +185,10 @@ namespace aprion
 
         private async void Window_ContentRendered(object sender, EventArgs e)
         {
-            var updateInfo = await manager.CheckForUpdate();
-
             manager = await UpdateManager
                     .GitHubUpdateManager(@"https://github.com/LocalCiggyShop/aprion");
+
+            var updateInfo = await manager.CheckForUpdate();
 
             LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
 
