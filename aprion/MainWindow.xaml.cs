@@ -27,13 +27,14 @@ namespace aprion
     {
         UpdateManager manager;
 
+        //Strings
         private string rootPath;
         private string versionFile;
         private string gameZip;
         private string gameExe;
-        private string suffix;
         private string websiteFile;
 
+        //Events
         private LauncherStatus _status;
         internal LauncherStatus Status
         {
@@ -61,6 +62,7 @@ namespace aprion
             }
         }
 
+        //Main
         public MainWindow()
         {
             InitializeComponent();
@@ -70,7 +72,22 @@ namespace aprion
             websiteFile = Path.Combine(rootPath, "Website.txt");
             gameZip = Path.Combine(rootPath, "Build.zip");
             gameExe = Path.Combine(rootPath, "Build", "game.exe");
-            suffix = "\n\nYou should be able to retry this is normal as it might not look like it haha";
+        }
+
+        //Init
+        Functions PublicFunctions = new Functions();
+
+        //Functions
+        private void WindowToggle(Boolean trueorfalse)
+        {
+            if (trueorfalse) {
+                Global_Window.Visibility = Visibility.Visible;
+                Global_Buttons.Visibility = Visibility.Visible;
+            } else
+            {
+                Global_Window.Visibility = Visibility.Hidden;
+                Global_Buttons.Visibility = Visibility.Hidden;
+            }
         }
         private void CheckForWebsite()
         {
@@ -82,7 +99,8 @@ namespace aprion
                 }
                 catch
                 {
-                    MessageBox.Show("Resource Loading Issue", "Failed to grab the url to the forums page, no worries.");
+                    return;
+                    //MessageBox.Show("Resource Loading Issue", "Failed to grab the url to the forums page, no worries.");
                 }
             }
         }
@@ -114,23 +132,6 @@ namespace aprion
                 LauncherUpdateBtn.IsEnabled = false;
             }
         }
-        private void OpenLink(string link)
-        {
-            string title = "Confirmation";
-            string message = "You are about to open a link are you sure?";
-
-            MessageBoxButton buttons = MessageBoxButton.YesNo;
-
-            if (MessageBox.Show(message, title, buttons, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            {
-                ProcessStartInfo psi = new ProcessStartInfo
-                {
-                    FileName = link,
-                    UseShellExecute = true
-                };
-                Process.Start(psi);
-            }
-        }
 
         private void CheckForUpdates()
         {
@@ -154,10 +155,9 @@ namespace aprion
                         Status = LauncherStatus.ready;
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Status = LauncherStatus.failed;
-                    MessageBox.Show($"Error checking for game updates: {ex}{suffix}", "Wait a few seconds before retrying");
                 }
             }
             else
@@ -204,29 +204,12 @@ namespace aprion
                 VersionText.Text = onlineVersion;
                 Status = LauncherStatus.ready;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Status = LauncherStatus.failed;
             }
         }
 
-        private async void Window_ContentRendered(object sender, EventArgs e)
-        {
-            try
-            {
-                manager = await UpdateManager
-                    .GitHubUpdateManager(@"https://github.com/LocalCiggyShop/aprion");
-
-                LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
-            }
-            catch(Exception)
-            {
-                LauncherVersion.Text = "Error Occurred, perhaps check discord.";
-            }
-            CheckForLauncherUpdates();
-            CheckForWebsite();
-            CheckForUpdates();
-        }
 
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -246,18 +229,29 @@ namespace aprion
 
         private void DiscordBtn_Click(object sender, RoutedEventArgs e)
         {
-            OpenLink("https://discord.gg/DrU7xDBJW2");
+            PublicFunctions.OpenLink("https://discord.gg/DrU7xDBJW2");
         }
 
         private void WebsiteBtn_Click(object sender, RoutedEventArgs e)
         {
-            OpenLink("https://website-hosted-a.herokuapp.com/");
+            PublicFunctions.OpenLink("https://website-hosted-a.herokuapp.com/");
         }
 
         private async void LauncherUpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-            await manager.UpdateApp();
-            MessageBox.Show("You have updated the launcher to the current version!\n\nPlease restart the application to apply!");
+            LauncherUpdateBtn.Content = "Downloading...";
+            LauncherUpdateBtn.IsEnabled = false;
+
+            try
+            {
+                await manager.UpdateApp();
+                MessageBox.Show("You have updated the launcher to the current version!\n\nPlease restart the application to apply!");
+                LauncherUpdateBtn.Visibility = Visibility.Hidden;
+            }
+            catch (Exception)
+            {
+                LauncherUpdateBtn.Content = "Error Occurred";
+            }
 
             //Thread.Sleep(5);
 
@@ -267,10 +261,37 @@ namespace aprion
 
         private void SuggestionBtn_Click(object sender, RoutedEventArgs e)
         {
-            OpenLink("https://discord.gg/uJxTn9gGZh");
+            PublicFunctions.OpenLink("https://discord.gg/uJxTn9gGZh");
+        }
+
+        private async void Window_ContentRendered(object sender, EventArgs e)
+        {
+            try
+            {
+                manager = await UpdateManager
+                    .GitHubUpdateManager(@"https://github.com/LocalCiggyShop/aprion");
+
+                LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
+            }
+            catch (Exception)
+            {
+                LauncherVersion.Text = "Error Occurred, perhaps check discord.";
+            }
+            CheckForLauncherUpdates();
+            CheckForWebsite();
+            CheckForUpdates();
+            WindowToggle(true);
+            SpinnerFrame.Visibility = Visibility.Hidden;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            WindowToggle(false);
+            SpinnerFrame.Visibility = Visibility.Visible;
         }
     }
 
+    //Structures
     struct Version
     {
         internal static Version zero = new Version(0, 0, 0);

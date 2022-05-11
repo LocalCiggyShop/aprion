@@ -7,18 +7,21 @@
         mc:Ignorable="d"
         Background="#1f1f1f"
         ContentRendered="Window_ContentRendered"
+        Loaded="Window_Loaded"
         Title="Aprion Launcher" Height="542" Width="1080" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Grid Background="Transparent" Height="521" VerticalAlignment="Center">
-        <WebBrowser Name="News" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0" Width="1036" Height="395" />
-        <TextBlock Name="VersionText" TextAlignment="Right" Text="Game Version v0.0.0" Foreground="White" Margin="229,31,22,474" RenderTransformOrigin="0.8,0.839" />
-        <TextBlock Name="Title" Foreground="White" Margin="69,14,749,491" RenderTransformOrigin="0.8,0.839" Text="Aprion Launcher" />
-        <TextBlock Name="Author" Foreground="White" Margin="69,30,673,475" RenderTransformOrigin="0.8,0.839" Text="By Discord: MusicTalents#2103 Github: LocalCiggyShop" />
-        <Image Source="Images/img.jpg" Margin="27,9,1018,470" />
+        <Frame Name="SpinnerFrame" Visibility="Visible" Source="Styles/Spinner.xaml" />
+        <Grid Name="Global_Window" Visibility="Visible">
+            <WebBrowser Name="News" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0" Width="1036" Height="395" />
+            <TextBlock Name="VersionText" TextAlignment="Right" Text="Game Version v0.0.0" Foreground="White" Margin="229,31,22,474" RenderTransformOrigin="0.8,0.839" />
+            <TextBlock Name="Title" Foreground="White" Margin="69,14,749,491" RenderTransformOrigin="0.8,0.839" Text="Aprion Launcher" />
+            <TextBlock Name="Author" Foreground="White" Margin="69,30,673,475" RenderTransformOrigin="0.8,0.839" Text="By Discord: MusicTalents#2103 Github: LocalCiggyShop" />
+            <Image Source="/Images/img.jpg" Margin="27,9,1018,470" />
 
-        <TextBlock Name="LauncherVersion" TextAlignment="Right" Text="Game Launcher v0.0.0" Foreground="White" Margin="229,13,22,490" />
-        <Button Name="LauncherUpdateBtn" Content="Up to date" IsEnabled="False" Click="LauncherUpdateBtn_Click" Visibility="Hidden" Padding="5" Foreground="Black" BorderBrush="Transparent" Margin="802,468,183,28" />
-
-        <Grid Margin="22,450,22,0" Height="61" VerticalAlignment="Top">
+            <TextBlock Name="LauncherVersion" TextAlignment="Right" Text="Game Launcher v0.0.0" Foreground="White" Margin="229,13,22,490" />
+            <Button Name="LauncherUpdateBtn" Panel.ZIndex="2" Content="Up to date" IsEnabled="False" Click="LauncherUpdateBtn_Click" Visibility="Hidden" Foreground="Black" BorderBrush="Transparent" Margin="802,460,183,20" />
+        </Grid>
+        <Grid Name="Global_Buttons" Panel.ZIndex="1" Margin="22,450,22,0" Height="61" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
