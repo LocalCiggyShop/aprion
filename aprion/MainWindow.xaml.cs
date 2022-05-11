@@ -8,6 +8,7 @@ using System.ComponentModel;
 using Squirrel;
 using System.Windows.Media;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace aprion
 {
@@ -257,6 +258,11 @@ namespace aprion
         {
             await manager.UpdateApp();
             MessageBox.Show("You have updated the launcher to the current version!\n\nPlease restart the application to apply!");
+
+            //Thread.Sleep(5);
+
+            //Process.Start(Application.ResourceAssembly.Location);
+            //Application.Current.Shutdown();
         }
 
         private void SuggestionBtn_Click(object sender, RoutedEventArgs e)
