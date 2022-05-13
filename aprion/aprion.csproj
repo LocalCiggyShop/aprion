@@ -8,6 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\img.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="{215d64d2-031c-33c7-96e3-61794cd1ee61}">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>4</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>215d64d2-031c-33c7-96e3-61794cd1ee61</Guid>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Images\favicon.ico" />
   </ItemGroup>
 
@@ -19,11 +32,15 @@
     <PackageReference Include="squirrel.windows" Version="1.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Images\img.jpg" />
+  </ItemGroup>
+
 	<PropertyGroup>
 		<NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
 		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 
-		<Version>1.0.4</Version>
+		<Version>1.0.5</Version>
 
 		<NuspecFile>$(SolutionDir)aprion\ReleaseSpec.nuspec</NuspecFile>
 
@@ -34,6 +51,8 @@
 		<PackageIcon>Images/img.jpg</PackageIcon>
 
 		<PackageIconUrl />
+
+		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 
 	<Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">

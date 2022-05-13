@@ -10,8 +10,8 @@
     <Grid>
         <TextBlock Name="Title" HorizontalAlignment="Center" VerticalAlignment="Center" Height="80" TextAlignment="Center" FontSize="22" Foreground="DarkOrange" Text="TIP" Width="756" />
 
-        <TextBlock Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontSize="15" Text="Loading" Width="755" />
+        <TextBlock Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Foreground="White" FontSize="15" Text="Loading" Width="756" />
 
-        <Button Name="DiscordLink" HorizontalAlignment="Center" VerticalAlignment="Top" BorderBrush="#5865F2" Foreground="White" Background="Transparent" Content="Discord"  Width="104" Height="29" Click="DiscordLink_Click" Margin="0,409,0,0" />
+        <Button Name="DiscordLink" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Discord" Width="104" Height="29" Click="DiscordLink_Click" Margin="0,402,0,0" Style="{StaticResource Primary}" />
     </Grid>
 </Page>

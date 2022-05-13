@@ -12,14 +12,17 @@
     <Grid Background="Transparent" Height="521" VerticalAlignment="Center">
         <Frame Name="SpinnerFrame" Visibility="Visible" Source="Styles/Spinner.xaml" />
         <Grid Name="Global_Window" Visibility="Visible">
-            <WebBrowser Name="News" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,50,0,0" Width="1036" Height="395" />
-            <TextBlock Name="VersionText" TextAlignment="Right" Text="Game Version v0.0.0" Foreground="White" Margin="229,31,22,474" RenderTransformOrigin="0.8,0.839" />
-            <TextBlock Name="Title" Foreground="White" Margin="69,14,749,491" RenderTransformOrigin="0.8,0.839" Text="Aprion Launcher" />
-            <TextBlock Name="Author" Foreground="White" Margin="69,30,673,475" RenderTransformOrigin="0.8,0.839" Text="By Discord: MusicTalents#2103 Github: LocalCiggyShop" />
-            <Image Source="/Images/img.jpg" Margin="27,9,1018,470" />
-
-            <TextBlock Name="LauncherVersion" TextAlignment="Right" Text="Game Launcher v0.0.0" Foreground="White" Margin="229,13,22,490" />
-            <Button Name="LauncherUpdateBtn" Panel.ZIndex="2" Content="Up to date" IsEnabled="False" Click="LauncherUpdateBtn_Click" Visibility="Hidden" Foreground="Black" BorderBrush="Transparent" Margin="802,460,183,20" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="VersionText" TextAlignment="Right" Text="Game Version v0.0.0" Foreground="White" Margin="229,31,22,474" RenderTransformOrigin="0.8,0.839" Grid.ColumnSpan="2" />
+            <TextBlock Name="Title" Foreground="DarkOrange" Margin="69,14,245,491" RenderTransformOrigin="0.8,0.839" Text="Aprion Launcher" />
+            <TextBlock Name="Author" Foreground="White" Margin="69,30,169,475" RenderTransformOrigin="0.8,0.839" Text="By Discord: MusicTalents#2103 Github: LocalCiggyShop" />
+            <Image Source="pack://application:,,,/Images/img.jpg" Margin="27,9,514,470" />
+            
+            <TextBlock Name="LauncherVersion" TextAlignment="Right" Text="Game Launcher v0.0.0" Foreground="White" Margin="229,13,22,490" Grid.ColumnSpan="2" />
+            <Button Name="LauncherUpdateBtn" Panel.ZIndex="2" Content="Up to date" IsEnabled="False" Click="LauncherUpdateBtn_Click" Visibility="Hidden" Foreground="Black" BorderBrush="Transparent" Margin="226,460,183,20" Grid.Column="1" />
         </Grid>
         <Grid Name="Global_Buttons" Panel.ZIndex="1" Margin="22,450,22,0" Height="61" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -28,10 +31,10 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Name="DiscordBtn" Content="Discord" Click="DiscordBtn_Click" Height="44" FontSize="20" Padding="5" Background="#474747" Foreground="White" HorizontalAlignment="Center" MinWidth="150" BorderBrush="Transparent" />
-            <Button Grid.Column="1" Name="PlayBtn" Content="Checking For Updates" Click="PlayBtn_Click" Height="53" FontSize="24"  Background="#333333" Foreground="White" HorizontalAlignment="Center" MinWidth="150" />
-            <Button Grid.Column="2" Name="WebsiteBtn" Content="Website" Click="WebsiteBtn_Click" Height="43" FontSize="20" Padding="5" Background="#474747" Foreground="White" HorizontalAlignment="Center" MinWidth="150" BorderBrush="Transparent" />
-            <Button Grid.Column="1" Name="SuggestionBtn" Click="SuggestionBtn_Click" Content="Suggest" Height="44" FontSize="20" Padding="5" Background="#474747" Foreground="White" HorizontalAlignment="Left"  MinWidth="150" BorderBrush="Transparent" Margin="14,9,0,8" />
+            <Button Grid.Column="0" Name="DiscordBtn" Content="Discord" Click="DiscordBtn_Click" Height="44" FontSize="20" Padding="5" BorderBrush="#474747" Foreground="White" Background="Transparent" HorizontalAlignment="Center" MinWidth="150" Style="{StaticResource Secondary}" />
+            <Button Grid.Column="1" Name="PlayBtn" Content="Checking For Updates" Click="PlayBtn_Click" Height="53" FontSize="24" HorizontalAlignment="Center" MinWidth="150" Style="{StaticResource Primary}" />
+            <Button Grid.Column="2" Name="WebsiteBtn" Content="Website" Click="WebsiteBtn_Click" Height="43" FontSize="20" Padding="5" BorderBrush="#474747" Foreground="White" Background="Transparent" HorizontalAlignment="Center" MinWidth="150" Style="{StaticResource Secondary}" />
+            <Button Grid.Column="1" Name="SuggestionBtn" Click="SuggestionBtn_Click" Content="Suggest" Height="44" FontSize="20" Padding="5" HorizontalAlignment="Left" MinWidth="150" Margin="14,9,0,8" Style="{StaticResource Secondary}" />
         </Grid>
     </Grid>
 </Window>

@@ -9,6 +9,10 @@ using Squirrel;
 using System.Windows.Media;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows.Navigation;
+using System.Windows.Controls;
+using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace aprion
 {
@@ -89,7 +93,8 @@ namespace aprion
                 Global_Buttons.Visibility = Visibility.Hidden;
             }
         }
-        private void CheckForWebsite()
+
+        /*private void CheckForWebsite()
         {
             if (File.Exists(websiteFile))
             {
@@ -103,7 +108,7 @@ namespace aprion
                     //MessageBox.Show("Resource Loading Issue", "Failed to grab the url to the forums page, no worries.");
                 }
             }
-        }
+        }*/
 
         private async void CheckForLauncherUpdates()
         {
@@ -139,7 +144,7 @@ namespace aprion
             {
                 Version localVersion = new Version(File.ReadAllText(versionFile));
 
-                VersionText.Text = localVersion.ToString();
+                VersionText.Text = $"Game Version: {localVersion}";
 
                 try
                 {
@@ -271,14 +276,15 @@ namespace aprion
                 manager = await UpdateManager
                     .GitHubUpdateManager(@"https://github.com/LocalCiggyShop/aprion");
 
-                LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion().ToString()}";
+                LauncherVersion.Text = $"Game Launcher v{manager.CurrentlyInstalledVersion()}";
             }
             catch (Exception)
             {
                 LauncherVersion.Text = "Error Occurred, perhaps check discord.";
+                LauncherVersion.Foreground = Brushes.Red;
             }
             CheckForLauncherUpdates();
-            CheckForWebsite();
+            //CheckForWebsite();
             CheckForUpdates();
             WindowToggle(true);
             SpinnerFrame.Visibility = Visibility.Hidden;
